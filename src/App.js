@@ -1,6 +1,9 @@
+/* eslint-disable react/jsx-no-comment-textnodes */
 import React, { useEffect, useState } from "react";
 import Loading from "./components/Loading";
 import Empty from "./components/Empty";
+import DogItem from "./components/DogItem";
+import Button from "./components/Button";
 
 function App() {
   const [breeds, setBreeds] = useState([]);
@@ -61,15 +64,8 @@ function App() {
               </option>
             ))}
           </select>
-          <button
-            type="button"
-            className="btn btn-primary mx-2"
-            disabled={!selectedBreed}
-            onClick={searchByBreed}
-            style={{ color: "#fff", cursor: "pointer" }}
-          >
-            Search
-          </button>
+          {
+            <Button selectedBreed={selectedBreed} searchByBreed={searchByBreed} />}
         </div>
         {dogImages.length > 0 && !isLoading && (
           <div className="px-5 mx-5 text-end" data-testid="results-count">
@@ -82,13 +78,24 @@ function App() {
           {isLoading && (
             <Loading />
           )}
-          {dogImages.length > 0 &&
+          {/* {dogImages.length > 0 &&
             !isLoading &&
             dogImages.map((imgSrc, index) => (
               <img
                 key={`${index}-${selectedBreed}`}
                 src={imgSrc}
                 className="img-thumbnail w-25"
+                alt={`${selectedBreed} ${index + 1} of ${dogImages.length}`}
+              />
+            ))} */}
+
+          {dogImages.length > 0 &&
+            !isLoading &&
+            dogImages.map((imgSrc, index) => (
+              // use DogItem component instead of img element
+              <DogItem
+                key={`${index}-${selectedBreed}`}
+                imgSrc={imgSrc}
                 alt={`${selectedBreed} ${index + 1} of ${dogImages.length}`}
               />
             ))}
@@ -99,3 +106,5 @@ function App() {
 }
 
 export default App;
+
+
